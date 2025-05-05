@@ -10,6 +10,6 @@ namespace ProjectManager.Services
         Task<Project?> GetByIdAsync(int id);
         Task CreateAsync(Project project);
         Task UpdateAsync(Project project);
-        Task DeleteAsync(int id); // 👈 Lägg till detta
+        Task DeleteAsync(int id);
     }
 }

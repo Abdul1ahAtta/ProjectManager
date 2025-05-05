@@ -1,0 +1,48 @@
+@model ProjectManager.Models.Project
+@{
+    ViewData["Title"] = "Project Details";
+}
+
+<div class="container mt-5" style="max-width: 720px;">
+    <div class="card p-5 shadow-sm rounded-4">
+        <div class="text-center mb-4">
+            <img src="https://via.placeholder.com/80x80.png?text=A" class="rounded-circle mb-3" />
+            <h2 class="fw-bold">@Model.Titel</h2>
+            <h6 class="text-muted">@Model.Client</h6>
+        </div>
+
+        <div class="mb-4">
+            <label class="fw-semibold">Description</label>
+            <p class="text-secondary">@Model.Beskrivning</p>
+        </div>
+
+        <div class="row text-center">
+            <div class="col">
+                <div class="border rounded-3 p-3">
+                    <strong>Status</strong>
+                    <div>@Model.Status</div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="border rounded-3 p-3">
+                    <strong>Start</strong>
+                    <div>@Model.StartDate.ToShortDateString()</div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="border rounded-3 p-3">
+                    <strong>End</strong>
+                    <div>@Model.EndDate.ToShortDateString()</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4 text-center">
+            <h5>💰 Budget: $@Model.Budget</h5>
+        </div>
+
+        <div class="mt-5 text-end">
+            <a asp-action="Index" class="btn btn-outline-secondary">← Back</a>
+        </div>
+    </div>
+</div>

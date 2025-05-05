@@ -2,29 +2,24 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ProjectManager.Data;
 using ProjectManager.Services;
+using ProjectManager.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 🔧 Lägg till databaskoppling
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// 🔧 Ändra detta ⬇ (ta bort kravet på bekräftad e-post)
-builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 {
-    options.SignIn.RequireConfirmedAccount = false; // 👈 Ändrad från true till false
+    options.SignIn.RequireConfirmedAccount = false;
 })
 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-// 🔧 Registrera din service
 builder.Services.AddScoped<IProjectService, ProjectService>();
-
-// 🔧 MVC med Razor views
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-// Middleware pipeline
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -33,16 +28,13 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
-app.UseAuthentication(); // 👈 Viktigt för Identity
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.MapRazorPages(); // 👈 För inloggning/registrering
-
+app.MapRazorPages();
 app.Run();

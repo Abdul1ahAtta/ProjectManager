@@ -15,7 +15,7 @@ namespace ProjectManager.Controllers
             _projectService = projectService;
         }
 
-        // GET: /Projects
+    
         public async Task<IActionResult> Index(string status)
         {
             var projects = await _projectService.GetAllAsync();
@@ -28,13 +28,13 @@ namespace ProjectManager.Controllers
             return View(projects);
         }
 
-        // GET: /Projects/Create
+        
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: /Projects/Create
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Project project)
@@ -49,7 +49,7 @@ namespace ProjectManager.Controllers
             return View(project);
         }
 
-        // GET: /Projects/Edit/5
+    
         public async Task<IActionResult> Edit(int id)
         {
             var project = await _projectService.GetByIdAsync(id);
@@ -61,7 +61,7 @@ namespace ProjectManager.Controllers
             return View(project);
         }
 
-        // POST: /Projects/Edit/5
+      
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Project project)
@@ -81,7 +81,7 @@ namespace ProjectManager.Controllers
             return View(project);
         }
 
-        // POST: /Projects/Delete/5
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)

@@ -1,47 +1,44 @@
-@model IEnumerable<ProjectManager.Models.Project>
-
+@model List<ProjectManager.Models.Project>
 @{
-    ViewData["Title"] = "Projektlista";
+    ViewData["Title"] = "Projects";
 }
 
-<h2>@ViewData["Title"]</h2>
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Projects</h2>
+        <a asp-action="Create" class="btn btn-primary">+ Add Project</a>
+    </div>
 
-<form method="get" class="mb-3">
-    <label for="status">Filtrera efter status:</label>
-    <select name="status" id="status" onchange="this.form.submit()">
-        <option value="">Alla</option>
-        <option value="Startad">Startade</option>
-        <option value="Slutförd">Slutförda</option>
-    </select>
-</form>
+    <ul class="nav nav-tabs mb-4">
+        <li class="nav-item">
+            <a class="nav-link @(ViewBag.Status == null ? "active" : "")" asp-action="Index">All</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link @(ViewBag.Status == "Startad" ? "active" : "")" asp-action="Index" asp-route-status="Startad">Started</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link @(ViewBag.Status == "Slutförd" ? "active" : "")" asp-action="Index" asp-route-status="Slutförd">Completed</a>
+        </li>
+    </ul>
 
-<a asp-action="Create" class="btn btn-success mb-3">+ Nytt Projekt</a>
-
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Titel</th>
-            <th>Beskrivning</th>
-            <th>Skapad</th>
-            <th>Status</th>
-            <th>Åtgärder</th>
-        </tr>
-    </thead>
-    <tbody>
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>@item.Titel</td>
-            <td>@item.Beskrivning</td>
-            <td>@item.SkapadDatum.ToShortDateString()</td>
-            <td>@item.Status</td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Redigera</a>
-                <form asp-action="Delete" asp-route-id="@item.Id" method="post" style="display:inline;" onsubmit="return confirm('Är du säker på att du vill ta bort projektet?');">
-                    <button type="submit" class="btn btn-sm btn-danger">Ta bort</button>
-                </form>
-            </td>
-        </tr>
-    }
-    </tbody>
-</table>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var item in Model)
+        {
+            <div class="col">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Titel</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Status: @item.Status</h6>
+                        <p class="card-text">@item.Beskrivning</p>
+                    </div>
+                    <div class="card-footer bg-transparent border-top-0 d-flex justify-content-between">
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Edit</a>
+                        <form asp-action="Delete" asp-route-id="@item.Id" method="post" onsubmit="return confirm('Are you sure?')">
+                            <button class="btn btn-sm btn-danger">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
